@@ -9,6 +9,4 @@ assignees: ''
 
 # Description
 
-# Related Issue
-
-# Related Pull Request
+# Picture ( if any)
