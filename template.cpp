@@ -3,6 +3,7 @@
 #include "./lib/geneAlgo.hpp"
 
 #define EPOCHS 3
+#define FAMILY_SIZE 5
 
 using namespace std;
 using namespace gcore;
@@ -26,10 +27,44 @@ Random *rdm;
  *
  * ~~~ area start ~~~
  */
+#define GENE_TYPE float
+
 struct Pkg
 {
+public:
     // decide your structure
     float cost;
+
+    vector<GENE_TYPE> gene;
+
+    Pkg()
+    {
+        gene = vector<GENE_TYPE>();
+    }
+
+    void setGeneLen(long long len)
+    {
+        gene.resize(len);
+    }
+
+    long long size()
+    {
+        return gene.size();
+    }
+
+    Pkg &operator=(const Pkg &pkg)
+    {
+        if (this == &pkg)
+            return *this;
+        cost = pkg.cost;
+        gene = pkg.gene;
+        return *this;
+    }
+
+    GENE_TYPE &operator[](long long index)
+    {
+        return gene[index];
+    }
 };
 
 bool cmp(const Pkg &a, const Pkg &b)
@@ -53,7 +88,7 @@ Pkg &operateMutation(Pkg &a)
     // you should calculate the cost here before return it
     return a;
 }
-ArrayList<Pkg> &mutationFunc(Heap<Pkg, cmp> &env)
+vector<Pkg> &mutationFunc(Heap<Pkg, cmp> &env)
 {
     // you could add some function when doing the selection
 
@@ -68,7 +103,7 @@ Pkg &operateCrossover(Pkg &a, Pkg &b)
     // you should calculate the cost here before return it
     return a;
 }
-ArrayList<Pkg> &crossoverFunc(Heap<Pkg, cmp> &env)
+vector<Pkg> &crossoverFunc(Heap<Pkg, cmp> &env)
 {
     // you could add some function when doing the selection
 
@@ -86,6 +121,9 @@ Heap<Pkg, cmp> initialize()
      */
     Heap<Pkg, cmp> t;
     Pkg pkg;
+    pkg.setGeneLen(2);
+    pkg[0] = 1;
+    pkg[1] = 0;
     pkg.cost = 1100;
     t.insert(pkg);
     return t;
@@ -110,7 +148,7 @@ int main()
     darwinEnv.setCrossoverFunc(crossoverFunc);
     darwinEnv.setMutationFunc(mutationFunc);
 
-    darwinEnv.simulate(EPOCHS);
+    darwinEnv.simulate(EPOCHS, FAMILY_SIZE);
 
     cout << darwinEnv.history[0].cost << endl;
 
