@@ -35,7 +35,7 @@ namespace gtool
 
         float randProb()
         {
-            return rand_r(&seed) / RAND_MAX;
+            return (float)rand_r(&seed) / RAND_MAX;
         }
     };
 }
