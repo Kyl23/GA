@@ -3,15 +3,15 @@
 
 #include <algorithm>
 #include <string>
-#include "./array_list.hpp"
-
+#include <vector>
 namespace gtool
 {
     template <typename T, bool (*cmp)(const T &, const T &)>
     class Heap
     {
     private:
-        gtool::ArrayList<T> heap;
+        std::vector<T> heap;
+        long long top = 0;
 
         long long getParent(long long index)
         {
@@ -23,14 +23,9 @@ namespace gtool
             return index * 2;
         }
 
-        long long heapSize()
-        {
-            return heap.getArrSize();
-        }
-
         long long getTop()
         {
-            return heap.size() - 1;
+            return top;
         }
 
         void bubbleDown(long long index)
@@ -69,13 +64,13 @@ namespace gtool
     public:
         Heap()
         {
-            heap.setTop(0);
+            heap.resize(1);
         }
 
         Heap(long long size)
         {
-            heap.setTop(0);
-            heap.setSize(size + 1);
+            heap.setSize(size);
+            top = size - 1;
         }
 
         ~Heap()
@@ -84,32 +79,36 @@ namespace gtool
 
         T &pop()
         {
+            return remove(1);
+        }
+
+        T &remove(long long index)
+        {
             if (getTop() < 1)
                 gtool::err("Heap is empty by T &pop()");
-            // do pop action here
+            // do remove action here
 
-            T min = heap[1];
-            std::swap(heap[getTop()], heap[1]);
-            heap.pop();
-            bubbleDown(1);
+            T out = heap[index];
+            std::swap(heap[getTop()], heap[index]);
+            bubbleDown(index);
+            top--;
 
-            return min;
+            return out;
         }
 
         T getRoot()
         {
+            if (getTop() < 1)
+                gtool::err("Heap is empty by T &getRoot()");
+
             return heap[1];
         }
 
         void insert(const T &value)
         {
-            heap.push(value);
+            heap.push_back(value);
             bubbleUp(getTop());
-        }
-
-        void clear()
-        {
-            heap.setTop(0);
+            top++;
         }
 
         void reHeapify()
@@ -125,11 +124,6 @@ namespace gtool
             return getTop();
         }
 
-        long long getHeapSize()
-        {
-            return heapSize();
-        }
-
         T &operator[](long long index)
         {
             return heap[index + 1];
@@ -137,7 +131,8 @@ namespace gtool
 
         gtool::Heap<T, cmp> &operator=(const gtool::Heap<T, cmp> &t)
         {
-            heap = t.heap;
+            heap = std::vector<T>(t.heap);
+            top = heap.size() - 1;
             return *this;
         }
 
@@ -149,7 +144,7 @@ namespace gtool
             }
         }
 
-        void operator+=(gtool::ArrayList<T> &t)
+        void operator+=(std::vector<T> &t)
         {
             for (long long i = 0; i < t.size(); i++)
             {

@@ -6,15 +6,15 @@
 namespace gcore
 {
     template <typename T, bool (*cmp)(const T &, const T &)>
-    gtool::ArrayList<T> &onePointMutation(gtool::Heap<T, cmp> &env, float mutationRate, gtool::Random *rdm, T &(*operate)(T &))
+    std::vector<T> &onePointMutation(gtool::Heap<T, cmp> &env, float mutationRate, gtool::Random *rdm, T &(*operate)(T &))
     {
-        gtool::ArrayList<T> *newChromo = new gtool::ArrayList<T>;
+        std::vector<T> *newChromo = new std::vector<T>;
 
         for (long long i = 0; i < env.size(); i++)
         {
             if (rdm->randProb() < mutationRate)
             {
-                newChromo->push(operate(env[i]));
+                newChromo->push_back(operate(env[i]));
             }
         }
 

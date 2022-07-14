@@ -12,18 +12,18 @@ private:
 
     gtool::Heap<T, cmp> &(*selection)(gtool::Heap<T, cmp> &ENV);
 
-    gtool::ArrayList<T> &(*mutation)(gtool::Heap<T, cmp> &ENV);
+    std::vector<T> &(*mutation)(gtool::Heap<T, cmp> &ENV);
 
-    gtool::ArrayList<T> &(*crossover)(gtool::Heap<T, cmp> &ENV);
+    std::vector<T> &(*crossover)(gtool::Heap<T, cmp> &ENV);
 
-    void concatEnv(gtool::ArrayList<T> &mutationBuffer, gtool::ArrayList<T> &crossoverBuffer)
+    void concatEnv(std::vector<T> &mutationBuffer, std::vector<T> &crossoverBuffer)
     {
         env += mutationBuffer;
         env += crossoverBuffer;
     }
 
 public:
-    explicit DarwinEnv(gtool::Heap<T, cmp> ENV)
+    explicit DarwinEnv(const gtool::Heap<T, cmp> &ENV)
     {
         env = ENV;
     }
@@ -35,25 +35,26 @@ public:
         selection = selectionFunc;
     }
 
-    void setMutationFunc(gtool::ArrayList<T> &(*mutationFunc)(gtool::Heap<T, cmp> &ENV))
+    void setMutationFunc(std::vector<T> &(*mutationFunc)(gtool::Heap<T, cmp> &ENV))
     {
         mutation = mutationFunc;
     }
 
-    void setCrossoverFunc(gtool::ArrayList<T> &(*crossoverFunc)(gtool::Heap<T, cmp> &ENV))
+    void setCrossoverFunc(std::vector<T> &(*crossoverFunc)(gtool::Heap<T, cmp> &ENV))
     {
         crossover = crossoverFunc;
     }
 
-    void simulate(long long generation)
+    void simulate(long long generation, long long familySize)
     {
         while (generation--)
         {
-            env = selection(env);
+            if (env.size() > familySize)
+                env = selection(env);
             // restructure heap here
 
-            gtool::ArrayList<T> mutationBuffer = mutation(env);   // nowait
-            gtool::ArrayList<T> crossoverBuffer = crossover(env); // nowait
+            std::vector<T> mutationBuffer = mutation(env);   // nowait
+            std::vector<T> crossoverBuffer = crossover(env); // nowait
 
             concatEnv(mutationBuffer, crossoverBuffer);
             // wait here
