@@ -10,11 +10,11 @@ class DarwinEnv
 private:
     gtool::Heap<T, cmp> env;
 
-    gtool::Heap<T, cmp> (*selection)(gtool::Heap<T, cmp> &ENV);
+    gtool::Heap<T, cmp> &(*selection)(gtool::Heap<T, cmp> &ENV);
 
-    gtool::ArrayList<T> (*mutation)(gtool::Heap<T, cmp> &ENV);
+    gtool::ArrayList<T> &(*mutation)(gtool::Heap<T, cmp> &ENV);
 
-    gtool::ArrayList<T> (*crossover)(gtool::Heap<T, cmp> &ENV);
+    gtool::ArrayList<T> &(*crossover)(gtool::Heap<T, cmp> &ENV);
 
     void concatEnv(gtool::ArrayList<T> &mutationBuffer, gtool::ArrayList<T> &crossoverBuffer)
     {
@@ -30,17 +30,17 @@ public:
 
     gtool::Heap<T, cmp> history;
 
-    void setSelectFunc(gtool::Heap<T, cmp> (*selectionFunc)(gtool::Heap<T, cmp> &ENV))
+    void setSelectFunc(gtool::Heap<T, cmp> &(*selectionFunc)(gtool::Heap<T, cmp> &ENV))
     {
         selection = selectionFunc;
     }
 
-    void setMutationFunc(gtool::ArrayList<T> (*mutationFunc)(gtool::Heap<T, cmp> &ENV))
+    void setMutationFunc(gtool::ArrayList<T> &(*mutationFunc)(gtool::Heap<T, cmp> &ENV))
     {
         mutation = mutationFunc;
     }
 
-    void setCrossoverFunc(gtool::ArrayList<T> (*crossoverFunc)(gtool::Heap<T, cmp> &ENV))
+    void setCrossoverFunc(gtool::ArrayList<T> &(*crossoverFunc)(gtool::Heap<T, cmp> &ENV))
     {
         crossover = crossoverFunc;
     }

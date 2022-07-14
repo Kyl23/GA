@@ -38,7 +38,7 @@ bool cmp(const Pkg &a, const Pkg &b)
     return a.cost < b.cost;
 }
 
-Heap<Pkg, cmp> selectionFunc(Heap<Pkg, cmp> &env)
+Heap<Pkg, cmp> &selectionFunc(Heap<Pkg, cmp> &env)
 {
     // you could add some function when doing the selection
     // the lib has provided some function, you may also write by yourself
@@ -46,14 +46,14 @@ Heap<Pkg, cmp> selectionFunc(Heap<Pkg, cmp> &env)
     return randomSelection<Pkg, cmp>(env, 0.5f, rdm);
 }
 
-Pkg operateMutation(const Pkg &a)
+Pkg &operateMutation(Pkg &a)
 {
     // make the mutation here
 
     // you should calculate the cost here before return it
     return a;
 }
-ArrayList<Pkg> mutationFunc(Heap<Pkg, cmp> &env)
+ArrayList<Pkg> &mutationFunc(Heap<Pkg, cmp> &env)
 {
     // you could add some function when doing the selection
 
@@ -61,14 +61,14 @@ ArrayList<Pkg> mutationFunc(Heap<Pkg, cmp> &env)
     return onePointMutation<Pkg, cmp>(env, 0.5f, rdm, operateMutation);
 }
 
-Pkg operateCrossover(const Pkg &a, const Pkg &b)
+Pkg &operateCrossover(Pkg &a, Pkg &b)
 {
     // make the crossover here
 
     // you should calculate the cost here before return it
     return a;
 }
-ArrayList<Pkg> crossoverFunc(Heap<Pkg, cmp> &env)
+ArrayList<Pkg> &crossoverFunc(Heap<Pkg, cmp> &env)
 {
     // you could add some function when doing the selection
 
@@ -97,7 +97,7 @@ Heap<Pkg, cmp> initialize()
  */
 int main()
 {
-    // auto judgement 
+    // auto judgement
     rdm = new Random[omp_get_max_threads()];
     for (int i = 0; i < omp_get_max_threads(); i++)
     {

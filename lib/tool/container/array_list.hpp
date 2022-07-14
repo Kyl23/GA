@@ -35,6 +35,12 @@ namespace gtool
         {
             arr = new T[arrSize];
         }
+        
+        ArrayList(long long initSize)
+        {
+            arrSize = initSize;
+            arr = new T[arrSize];
+        }
 
         ~ArrayList()
         {
@@ -63,7 +69,7 @@ namespace gtool
             top--;
         }
 
-        void push(T value)
+        void push(const T &value)
         {
             if (top == arrSize - 1 && top == 0x7fffffffffffffff - 1)
                 gtool::err("ArrayList is overflow by void push(T value)");

@@ -82,10 +82,10 @@ namespace gtool
         {
         }
 
-        T pop()
+        T &pop()
         {
             if (getTop() < 1)
-                gtool::err("Heap is empty by T popMin()");
+                gtool::err("Heap is empty by T &pop()");
             // do pop action here
 
             T min = heap[1];
@@ -101,7 +101,7 @@ namespace gtool
             return heap[1];
         }
 
-        void insert(T value)
+        void insert(const T &value)
         {
             heap.push(value);
             bubbleUp(getTop());
@@ -130,7 +130,7 @@ namespace gtool
             return heapSize();
         }
 
-        T operator[](long long index)
+        T &operator[](long long index)
         {
             return heap[index + 1];
         }
