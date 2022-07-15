@@ -77,12 +77,12 @@ namespace gtool
         {
         }
 
-        T &pop()
+        T pop()
         {
             return remove(1);
         }
 
-        T &remove(long long index)
+        T remove(long long index)
         {
             if (getTop() < 1)
                 gtool::err("Heap is empty by T &pop()");
@@ -90,8 +90,8 @@ namespace gtool
 
             T out = heap[index];
             std::swap(heap[getTop()], heap[index]);
-            bubbleDown(index);
             top--;
+            bubbleDown(index);
 
             return out;
         }
@@ -107,8 +107,8 @@ namespace gtool
         void insert(const T &value)
         {
             heap.push_back(value);
-            bubbleUp(getTop());
             top++;
+            bubbleUp(getTop());
         }
 
         void reHeapify()
