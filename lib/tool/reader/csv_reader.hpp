@@ -13,8 +13,15 @@ namespace gtool
     {
     private:
         std::ifstream file;
+
         char delim;
+
         std::string filePath;
+
+        void throwFileOpenErr(const std::string &line)
+        {
+            gtool::err("./lib/tool/reader/csv_reader.hpp", line, "readFileError");
+        }
 
     public:
         void open(std::string path, char pattern = ',')
@@ -22,6 +29,7 @@ namespace gtool
             filePath = path;
             delim = pattern;
         }
+
         std::vector<std::vector<std::string>> readTable()
         {
 
@@ -29,7 +37,7 @@ namespace gtool
 
             file.open(filePath);
             if (!file.is_open())
-                gtool::err("CSVReader : open file error , in readTable()");
+                throwFileOpenErr("33");
             while (!file.eof())
             {
 
@@ -60,11 +68,12 @@ namespace gtool
             out.erase(out.end());
             return out;
         }
+
         void print()
         {
             file.open(filePath);
             if (!file.is_open())
-                gtool::err("CSVReader : open file error , in print()");
+                throwFileOpenErr("72");
             while (!file.eof())
             {
                 std::string line;

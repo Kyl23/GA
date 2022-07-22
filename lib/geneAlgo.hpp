@@ -25,6 +25,8 @@ private:
 public:
     explicit DarwinEnv(const gtool::Heap<T, cmp> &ENV)
     {
+        std::ios::sync_with_stdio(false);
+        std::cin.tie(0);
         env = ENV;
     }
 
@@ -60,6 +62,7 @@ public:
             // wait here
             // concat all the response from mutate and crossover
             history.insert(env.getRoot());
+            gtool::log("remaining epoch: " + std::to_string(generation), "best solution: " + std::to_string(history[0].cost));
         }
     }
 };

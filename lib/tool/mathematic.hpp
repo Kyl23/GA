@@ -10,7 +10,7 @@ namespace gtool
     private:
         unsigned int seed;
 
-        public:
+    public:
         Random(int seed_ = 42)
         {
             seed = seed_;

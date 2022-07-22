@@ -62,6 +62,11 @@ namespace gtool
             }
         }
 
+        void throwHeapEmpty(const std::string &line)
+        {
+            gtool::err("./lib/tool/container/heap.hpp", line, "Heap is empty");
+        }
+
     public:
         Heap()
         {
@@ -88,7 +93,7 @@ namespace gtool
         T remove(long long index)
         {
             if (getTop() < 1)
-                gtool::err("Heap is empty by T &pop()");
+                throwHeapEmpty("93");
             // do remove action here
 
             T out = heap[index];
@@ -102,25 +107,24 @@ namespace gtool
         T getRoot()
         {
             if (getTop() < 1)
-                gtool::err("Heap is empty by T &getRoot()");
+                throwHeapEmpty("107");
 
             return heap[1];
         }
 
         void insert(const T &value)
         {
-            if (top >= heapSize - 1)
+            top++;
+            if (top >= heap.size() - 1)
             {
 
                 heap.push_back(value);
-                heapSize++;
-                top++;
             }
             else
             {
-                heap[++top] = value;
+                heap[top] = value;
             }
-
+            heapSize = heap.size();
             bubbleUp(getTop());
         }
 

@@ -24,14 +24,18 @@
 
 namespace gtool
 {
-    void err(std::string msg)
+    void err(std::string path, std::string line, std::string msg)
     {
-        printf(LIGHT_RED "%s\n" NONE, msg.c_str());
+        printf("\n%s:%s" YELLOW " %s\n" NONE, path.c_str(), line.c_str(), msg.c_str());
         exit(-1);
     }
-    void warn(std::string msg)
+    void warn(std::string path, std::string line, std::string msg)
     {
-        printf(YELLOW "%s\n" NONE, msg.c_str());
+        printf("\n%s:%s" YELLOW " %s\n" NONE, path.c_str(), line.c_str(), msg.c_str());
+    }
+    void log(std::string title_msg, std::string descript_msg)
+    {
+        printf(BLUE "\n%s" GREEN " %s\n" NONE, title_msg.c_str(), descript_msg.c_str());
     }
 }
 

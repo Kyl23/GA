@@ -86,7 +86,7 @@ vector<Pkg> &mutationFunc(Heap<Pkg, cmp> &env)
     // you could add some function when doing the selection
 
     // the lib has provided some function, you may also write by yourself
-    return onePointMutation<Pkg, cmp>(env, 0.5f, rdm,0,1);
+    return onePointMutation<Pkg, cmp>(env, 0.5f, rdm, 0, 1);
 }
 
 vector<Pkg> &crossoverFunc(Heap<Pkg, cmp> &env)
