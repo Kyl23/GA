@@ -57,7 +57,7 @@ public:
         if (this == &pkg)
             return *this;
         cost = pkg.cost;
-        gene = pkg.gene;
+        gene = vector<GENE_TYPE>(pkg.gene);
         return *this;
     }
 
@@ -81,34 +81,20 @@ Heap<Pkg, cmp> &selectionFunc(Heap<Pkg, cmp> &env)
     return randomSelection<Pkg, cmp>(env, 0.5f, rdm);
 }
 
-Pkg &operateMutation(Pkg &a)
-{
-    // make the mutation here
-
-    // you should calculate the cost here before return it
-    return a;
-}
 vector<Pkg> &mutationFunc(Heap<Pkg, cmp> &env)
 {
     // you could add some function when doing the selection
 
     // the lib has provided some function, you may also write by yourself
-    return onePointMutation<Pkg, cmp>(env, 0.5f, rdm, operateMutation);
+    return onePointMutation<Pkg, cmp>(env, 0.5f, rdm,0,1);
 }
 
-Pkg &operateCrossover(Pkg &a, Pkg &b)
-{
-    // make the crossover here
-
-    // you should calculate the cost here before return it
-    return a;
-}
 vector<Pkg> &crossoverFunc(Heap<Pkg, cmp> &env)
 {
     // you could add some function when doing the selection
 
     // the lib has provided some function, you may also write by yourself
-    return fullCrossover<Pkg, cmp>(env, 0.5f, rdm, operateCrossover);
+    return fullCrossover<Pkg, cmp>(env, 0.5f, rdm);
 }
 
 Heap<Pkg, cmp> initialize()

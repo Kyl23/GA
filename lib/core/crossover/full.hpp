@@ -4,7 +4,7 @@
 namespace gcore
 {
     template <typename T, bool (*cmp)(const T &, const T &)>
-    std::vector<T> &fullCrossover(gtool::Heap<T, cmp> &env, float crossoverRate, gtool::Random *rdm, T &(*operate)(T &, T &))
+    std::vector<T> &fullCrossover(gtool::Heap<T, cmp> &env, float crossoverRate, gtool::Random *rdm)
     {
         std::vector<T> *newChromo = new std::vector<T>;
 
@@ -13,7 +13,15 @@ namespace gcore
             if (rdm->randProb() < crossoverRate)
             {
                 long long wifeIndex = rdm->randInt(env.size());
-                newChromo->push_back(operate(env[i], env[wifeIndex]));
+                T temp = env[i];
+                for (long long j = 0; j < env[wifeIndex].size(); j++)
+                {
+                    if (rdm->randProb() < 0.5f)
+                    {
+                        temp[j] = env[wifeIndex][j];
+                    }
+                }
+                newChromo->push_back(temp);
             }
         }
 
