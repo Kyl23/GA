@@ -10,7 +10,7 @@ namespace gtool
     private:
         unsigned int seed;
 
-    public:
+        public:
         Random(int seed_ = 42)
         {
             seed = seed_;
@@ -18,24 +18,24 @@ namespace gtool
 
         int randInt()
         {
-            return rand_r(&seed);
+            return (int)(randProb() * INT32_MAX);
         }
 
         int randInt(int upper_bound)
         {
             if (!upper_bound)
                 upper_bound = 1;
-            return rand_r(&seed) % upper_bound;
+            return (int)(randProb() * INT32_MAX) % upper_bound;
         }
 
         int randInt(int lower_bound, int upper_bound)
         {
-            return rand_r(&seed) % (upper_bound - lower_bound) + lower_bound;
+            return (int)(randProb() * INT32_MAX) % (upper_bound - lower_bound) + lower_bound;
         }
 
         float randProb()
         {
-            return (float)rand_r(&seed) / RAND_MAX;
+            return (float)rand() / RAND_MAX;
         }
     };
 }
