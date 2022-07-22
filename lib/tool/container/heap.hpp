@@ -12,6 +12,7 @@ namespace gtool
     private:
         std::vector<T> heap;
         long long top = 0;
+        long long heapSize = 0;
 
         long long getParent(long long index)
         {
@@ -65,12 +66,14 @@ namespace gtool
         Heap()
         {
             heap.resize(1);
+            heapSize = 1;
         }
 
-        Heap(long long size)
+        Heap(long long initSize)
         {
-            heap.setSize(size);
-            top = size - 1;
+            heap.setSize(initSize);
+            top = initSize - 1;
+            heapSize = initSize;
         }
 
         ~Heap()
@@ -106,8 +109,18 @@ namespace gtool
 
         void insert(const T &value)
         {
-            heap.push_back(value);
-            top++;
+            if (top >= heapSize - 1)
+            {
+
+                heap.push_back(value);
+                heapSize++;
+                top++;
+            }
+            else
+            {
+                heap[++top] = value;
+            }
+
             bubbleUp(getTop());
         }
 
@@ -122,6 +135,11 @@ namespace gtool
         long long size()
         {
             return getTop();
+        }
+
+        long long arrSize()
+        {
+            return heapSize;
         }
 
         T &operator[](long long index)
